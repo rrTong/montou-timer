@@ -71,7 +71,7 @@ const Timer = () => {
       </button>
       <div
         style={{
-          backgroundColor: showGreen && "green",
+          backgroundColor: showGreen && "rgba(51, 255, 0)",
           height: "100px",
           width: "100px",
           margin: "10px auto",

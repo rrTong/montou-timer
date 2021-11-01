@@ -2,9 +2,9 @@ html,
 body {
   margin: 0;
   padding: 0;
-  background-color: rgb(219, 169, 94);
+  background-color: rgb(51, 102, 153);
   color: rgb(242, 240, 228);
-  font-family: "Londrina Solid", cursive;
+  font-family: "Roboto Condensed", sans-serif;
 }
 
 * {

@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import moment from "moment";
+import "../styles/Timer.css";
 
+const timerStart = moment();
 const timerEnd = moment().add(2, "hours");
 
 const Timer = () => {
@@ -55,6 +57,18 @@ const Timer = () => {
           width: "100px",
         }}
       ></div>
+      <div id="timer-info">
+        <table>
+          <tr>
+            <td>Timer Start: </td>
+            <td>{timerStart.format("dddd, MMMM Do YYYY, h:mm:ss a")}</td>
+          </tr>
+          <tr>
+            <td>Timer End: </td>
+            <td>{timerEnd.format("dddd, MMMM Do YYYY, h:mm:ss a")}</td>
+          </tr>
+        </table>
+      </div>
     </>
   );
 };

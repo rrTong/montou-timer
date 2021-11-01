@@ -69,6 +69,7 @@ const Timer = () => {
           backgroundColor: showGreen && "green",
           height: "100px",
           width: "100px",
+          margin: "10px auto",
         }}
       ></div>
       <div id="timer-info">

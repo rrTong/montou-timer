@@ -5,7 +5,6 @@ import "../styles/Timer.css";
 
 const timerStart = moment();
 const timerEnd = moment().add(2, "hours");
-let oneSecCount = 0;
 let oneMinCount = 0;
 let fiveMinCount = 0;
 
@@ -42,16 +41,7 @@ const Timer = () => {
       </div>
       <button
         className="button"
-        id="button-one-sec"
-        onClick={() => {
-          setTimer((prevTimer) => prevTimer.clone().add(1, "seconds"));
-          oneSecCount++;
-        }}
-      >
-        -1 second
-      </button>
-      <button
-        className="button"
+        id="button-one-min"
         onClick={() => {
           setTimer((prevTimer) => prevTimer.clone().add(1, "minutes"));
           oneMinCount++;
@@ -96,10 +86,6 @@ const Timer = () => {
             </td>
           </tr>
           <tr>
-            <td>-1 second</td>
-            <td>{oneSecCount}</td>
-          </tr>
-          <tr>
             <td>-1 minute</td>
             <td>{oneMinCount}</td>
           </tr>
@@ -109,9 +95,7 @@ const Timer = () => {
           </tr>
           <tr>
             <td>Total Time Skipped:</td>
-            <td>
-              {oneMinCount + fiveMinCount * 5} minutes, {oneSecCount} seconds
-            </td>
+            <td>{oneMinCount + fiveMinCount * 5} minutes</td>
           </tr>
         </table>
       </div>

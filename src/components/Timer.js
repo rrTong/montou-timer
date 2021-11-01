@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import moment from "moment";
+import accurateTimer from "../hooks/accurateTimer";
 import "../styles/Timer.css";
 
 const timerStart = moment();
@@ -10,16 +11,23 @@ let fiveMinCount = 0;
 
 const Timer = () => {
   const [timer, setTimer] = useState(moment());
-  const [showGreen, setShowGreen] = useState(false);
   let timeDiff = moment.duration(timerEnd.diff(timer));
+  const [timeElapsed, setTimeElapsed] = useState(
+    moment().utcOffset(0).startOf("day").add(1, "seconds")
+  );
+  let timeElapsedDiff = moment.duration(timeElapsed);
+  const [showGreen, setShowGreen] = useState(false);
 
   if (timer.isSame(timerEnd) || timer.isAfter(timerEnd)) {
     if (!showGreen) setShowGreen(true);
   }
 
   useEffect(() => {
-    const interval = setInterval(() => {
+    const interval = accurateTimer(() => {
       setTimer((prevTimer) => prevTimer.clone().add(1, "seconds"));
+      setTimeElapsed((prevTimeElapsed) =>
+        prevTimeElapsed.clone().add(1, "seconds")
+      );
     }, 1000);
 
     return () => clearInterval(interval);
@@ -28,8 +36,8 @@ const Timer = () => {
   return (
     <>
       <div>
-        <span>{timeDiff.hours()}h</span>
-        <span>{timeDiff.minutes()}m</span>
+        <span>{timeDiff.hours()}h </span>
+        <span>{timeDiff.minutes()}m </span>
         <span>{timeDiff.seconds()}s</span>
       </div>
       <button
@@ -66,21 +74,33 @@ const Timer = () => {
       <div id="timer-info">
         <table>
           <tr>
-            <td>Timer Start: </td>
+            <td>Timer Start:</td>
             <td>{timerStart.format("dddd, MMMM Do YYYY, h:mm:ss a")}</td>
           </tr>
           <tr>
-            <td>Timer End: </td>
+            <td>Timer End:</td>
             <td>{timerEnd.format("dddd, MMMM Do YYYY, h:mm:ss a")}</td>
           </tr>
-          <td>-1 second</td>
-          <td>{oneSecCount}</td>
-          <tr></tr>
-          <td>-1 minute</td>
-          <td>{oneMinCount}</td>
-          <tr></tr>
-          <td>-5 minutes</td>
-          <td>{fiveMinCount}</td>
+          <tr>
+            <td>Time Elapsed:</td>
+            <td>
+              <span>{timeElapsedDiff.hours()}h </span>
+              <span>{timeElapsedDiff.minutes()}m </span>
+              <span>{timeElapsedDiff.seconds()}s</span>
+            </td>
+          </tr>
+          <tr>
+            <td>-1 second</td>
+            <td>{oneSecCount}</td>
+          </tr>
+          <tr>
+            <td>-1 minute</td>
+            <td>{oneMinCount}</td>
+          </tr>
+          <tr>
+            <td>-5 minutes</td>
+            <td>{fiveMinCount}</td>
+          </tr>
           <tr>
             <td>Total Time Skipped:</td>
             <td>

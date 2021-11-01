@@ -1,22 +1,20 @@
 import { useState, useEffect } from "react";
 import moment from "moment";
 
-// const format = "hh:mm:ss";
 const timerEnd = moment().add(2, "hours");
 
 const Timer = () => {
   const [timer, setTimer] = useState(moment());
-  // const [showGreen, setShowGreen] = useState(false);
+  const [showGreen, setShowGreen] = useState(false);
   let timeDiff = moment.duration(timerEnd.diff(timer));
+
+  if (timer.isSame(timerEnd) || timer.isAfter(timerEnd)) {
+    if (!showGreen) setShowGreen(true);
+  }
 
   useEffect(() => {
     const interval = setInterval(() => {
       setTimer((prevTimer) => prevTimer.clone().add(1, "seconds"));
-
-      // console.log(timer.clone().format(format));
-      // if (timer.clone().isSame(timerEnd) || timer.clone().isAfter(timerEnd)) {
-      //   setShowGreen(true);
-      // }
     }, 1000);
 
     return () => clearInterval(interval);
@@ -50,13 +48,13 @@ const Timer = () => {
       >
         -5 minutes
       </button>
-      {/* <div
+      <div
         style={{
           backgroundColor: showGreen && "green",
           height: "100px",
           width: "100px",
         }}
-      ></div> */}
+      ></div>
     </>
   );
 };

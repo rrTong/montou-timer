@@ -26,7 +26,7 @@
 }
 
 .button:active {
-  background-color: rgb(219, 169, 94);
+  background-color: rgb(190, 190, 190);
 }
 
 #timer-info {

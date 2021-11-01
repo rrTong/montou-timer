@@ -36,9 +36,9 @@ const Timer = () => {
   return (
     <>
       <div>
-        <span>{timeDiff.hours()}h </span>
-        <span>{timeDiff.minutes()}m </span>
-        <span>{timeDiff.seconds()}s</span>
+        <span className="timer-text">{timeDiff.hours()}h </span>
+        <span className="timer-text">{timeDiff.minutes()}m </span>
+        <span className="timer-text">{timeDiff.seconds()}s</span>
       </div>
       <button
         className="button"

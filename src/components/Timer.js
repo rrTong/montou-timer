@@ -42,6 +42,7 @@ const Timer = () => {
       </div>
       <button
         className="button"
+        id="button-one-sec"
         onClick={() => {
           setTimer((prevTimer) => prevTimer.clone().add(1, "seconds"));
           oneSecCount++;
@@ -60,6 +61,7 @@ const Timer = () => {
       </button>
       <button
         className="button"
+        id="button-five-min"
         onClick={() => {
           setTimer((prevTimer) => prevTimer.clone().add(5, "minutes"));
           fiveMinCount++;

@@ -1,10 +1,18 @@
 .button {
-  border: none;
-  transition: 0.2s;
   font-size: 1rem;
   font-family: "Londrina Solid", cursive;
-  border: 1px solid black;
   background-color: rgb(228, 226, 218);
+  border: none;
+  padding: 5px 10px;
+  transition: 0.2s;
+}
+
+#button-one-sec {
+  border-radius: 8px 0 0 8px;
+}
+
+#button-five-min {
+  border-radius: 0 8px 8px 0;
 }
 
 .button:hover {

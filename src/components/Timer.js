@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import moment from "moment";
 import accurateTimer from "../hooks/accurateTimer";
-import idle from "../assets/idle.gif";
 import idleBasic from "../assets/idle-basic.gif";
 import follow from "../assets/follow.gif";
 import sub from "../assets/sub.gif";
@@ -22,7 +21,7 @@ const Timer = () => {
     moment().utcOffset(0).startOf("day").add(1, "seconds")
   );
   let timeElapsedDiff = moment.duration(timeElapsed);
-  const [gifState, setGifState] = useState(idle);
+  const [gifState, setGifState] = useState(idleBasic);
 
   if (timer.isSame(timerEnd) || timer.isAfter(timerEnd)) {
     if (gifState !== giveaway) setGifState(giveaway);
@@ -58,7 +57,7 @@ const Timer = () => {
           setTimer((prevTimer) => prevTimer.clone().add(1, "minutes"));
           oneMinCount++;
           const promise = new Promise((resolve, reject) => {
-            resolve(setGifState(idle));
+            resolve(setGifState(idleBasic));
           });
           promise.then(() => {
             setGifState(follow);
@@ -75,7 +74,7 @@ const Timer = () => {
           setTimer((prevTimer) => prevTimer.clone().add(2, "minutes"));
           twoMinCount++;
           const promise = new Promise((resolve, reject) => {
-            resolve(setGifState(idle));
+            resolve(setGifState(idleBasic));
           });
           promise.then(() => {
             setGifState(sub);
@@ -92,7 +91,7 @@ const Timer = () => {
           setTimer((prevTimer) => prevTimer.clone().add(5, "minutes"));
           fiveMinCount++;
           const promise = new Promise((resolve, reject) => {
-            resolve(setGifState(idle));
+            resolve(setGifState(idleBasic));
           });
           promise.then(() => {
             setGifState(sub);
@@ -103,7 +102,7 @@ const Timer = () => {
         -5 minutes
       </button>
       <div>
-        <img id="gif" src={gifState} alt="idle" />
+        <img id="gif" src={gifState} alt="montou-animation" />
       </div>
       <div id="timer-info">
         <table>

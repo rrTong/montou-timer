@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import moment from "moment";
 import accurateTimer from "../hooks/accurateTimer";
 import idle from "../assets/idle.gif";
-import basic from "../assets/basic.gif";
+import idleBasic from "../assets/idle-basic.gif";
 import follow from "../assets/follow.gif";
 import sub from "../assets/sub.gif";
 import giveaway from "../assets/giveaway.gif";
@@ -37,9 +37,8 @@ const Timer = () => {
       if (gifTimer > 0) {
         gifTimer--;
       } else {
-        setGifState(idle);
+        setGifState(idleBasic);
       }
-      console.log(gifTimer);
     }, 1000);
 
     return () => clearInterval(interval);

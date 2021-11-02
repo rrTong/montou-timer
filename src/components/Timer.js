@@ -13,6 +13,7 @@ const timerEnd = moment().add(2, "hours");
 let oneMinCount = 0;
 let twoMinCount = 0;
 let fiveMinCount = 0;
+let gifTimer = 0;
 
 const Timer = () => {
   const [timer, setTimer] = useState(moment());
@@ -22,7 +23,6 @@ const Timer = () => {
   );
   let timeElapsedDiff = moment.duration(timeElapsed);
   const [gifState, setGifState] = useState(idle);
-  console.log(gifState);
 
   if (timer.isSame(timerEnd) || timer.isAfter(timerEnd)) {
     if (gifState !== giveaway) setGifState(giveaway);
@@ -34,6 +34,12 @@ const Timer = () => {
       setTimeElapsed((prevTimeElapsed) =>
         prevTimeElapsed.clone().add(1, "seconds")
       );
+      if (gifTimer > 0) {
+        gifTimer--;
+      } else {
+        setGifState(idle);
+      }
+      console.log(gifTimer);
     }, 1000);
 
     return () => clearInterval(interval);
@@ -53,12 +59,11 @@ const Timer = () => {
           setTimer((prevTimer) => prevTimer.clone().add(1, "minutes"));
           oneMinCount++;
           const promise = new Promise((resolve, reject) => {
-            resolve(setGifState(follow));
+            resolve(setGifState(idle));
           });
           promise.then(() => {
-            accurateTimer(() => {
-              setGifState(idle);
-            }, 30000);
+            setGifState(basic);
+            gifTimer = 30;
           });
         }}
       >
@@ -71,12 +76,11 @@ const Timer = () => {
           setTimer((prevTimer) => prevTimer.clone().add(2, "minutes"));
           twoMinCount++;
           const promise = new Promise((resolve, reject) => {
-            resolve(setGifState(follow));
+            resolve(setGifState(idle));
           });
           promise.then(() => {
-            accurateTimer(() => {
-              setGifState(idle);
-            }, 30000);
+            setGifState(follow);
+            gifTimer = 30;
           });
         }}
       >
@@ -89,12 +93,11 @@ const Timer = () => {
           setTimer((prevTimer) => prevTimer.clone().add(5, "minutes"));
           fiveMinCount++;
           const promise = new Promise((resolve, reject) => {
-            resolve(setGifState(sub));
+            resolve(setGifState(idle));
           });
           promise.then(() => {
-            accurateTimer(() => {
-              setGifState(idle);
-            }, 30000);
+            setGifState(sub);
+            gifTimer = 30;
           });
         }}
       >

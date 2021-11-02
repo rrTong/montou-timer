@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import moment from "moment";
 import accurateTimer from "../hooks/accurateTimer";
 import idle from "../assets/idle.gif";
+import basic from "../assets/basic.gif";
 import follow from "../assets/follow.gif";
 import sub from "../assets/sub.gif";
 import giveaway from "../assets/giveaway.gif";
@@ -10,6 +11,7 @@ import "../styles/Timer.css";
 const timerStart = moment();
 const timerEnd = moment().add(2, "hours");
 let oneMinCount = 0;
+let twoMinCount = 0;
 let fiveMinCount = 0;
 
 const Timer = () => {
@@ -64,6 +66,24 @@ const Timer = () => {
       </button>
       <button
         className="button"
+        id="button-two-min"
+        onClick={() => {
+          setTimer((prevTimer) => prevTimer.clone().add(2, "minutes"));
+          twoMinCount++;
+          const promise = new Promise((resolve, reject) => {
+            resolve(setGifState(follow));
+          });
+          promise.then(() => {
+            accurateTimer(() => {
+              setGifState(idle);
+            }, 30000);
+          });
+        }}
+      >
+        -2 minutes
+      </button>
+      <button
+        className="button"
         id="button-five-min"
         onClick={() => {
           setTimer((prevTimer) => prevTimer.clone().add(5, "minutes"));
@@ -107,12 +127,18 @@ const Timer = () => {
               <td>{oneMinCount}</td>
             </tr>
             <tr>
+              <td>-2 minute</td>
+              <td>{twoMinCount}</td>
+            </tr>
+            <tr>
               <td>-5 minutes</td>
               <td>{fiveMinCount}</td>
             </tr>
             <tr>
               <td>Total Time Skipped:</td>
-              <td>{oneMinCount + fiveMinCount * 5} minutes</td>
+              <td>
+                {oneMinCount + twoMinCount * 2 + fiveMinCount * 5} minutes
+              </td>
             </tr>
           </tbody>
         </table>

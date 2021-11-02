@@ -1,6 +1,10 @@
 import { useState, useEffect } from "react";
 import moment from "moment";
 import accurateTimer from "../hooks/accurateTimer";
+import idle from "../assets/idle.gif";
+import follow from "../assets/follow.gif";
+import sub from "../assets/sub.gif";
+import giveaway from "../assets/giveaway.gif";
 import "../styles/Timer.css";
 
 const timerStart = moment();
@@ -15,10 +19,11 @@ const Timer = () => {
     moment().utcOffset(0).startOf("day").add(1, "seconds")
   );
   let timeElapsedDiff = moment.duration(timeElapsed);
-  const [showGreen, setShowGreen] = useState(false);
+  const [gifState, setGifState] = useState(idle);
+  console.log(gifState);
 
   if (timer.isSame(timerEnd) || timer.isAfter(timerEnd)) {
-    if (!showGreen) setShowGreen(true);
+    if (gifState !== giveaway) setGifState(giveaway);
   }
 
   useEffect(() => {
@@ -45,6 +50,14 @@ const Timer = () => {
         onClick={() => {
           setTimer((prevTimer) => prevTimer.clone().add(1, "minutes"));
           oneMinCount++;
+          const promise = new Promise((resolve, reject) => {
+            resolve(setGifState(follow));
+          });
+          promise.then(() => {
+            accurateTimer(() => {
+              setGifState(idle);
+            }, 30000);
+          });
         }}
       >
         -1 minute
@@ -55,48 +68,53 @@ const Timer = () => {
         onClick={() => {
           setTimer((prevTimer) => prevTimer.clone().add(5, "minutes"));
           fiveMinCount++;
+          const promise = new Promise((resolve, reject) => {
+            resolve(setGifState(sub));
+          });
+          promise.then(() => {
+            accurateTimer(() => {
+              setGifState(idle);
+            }, 30000);
+          });
         }}
       >
         -5 minutes
       </button>
-      <div
-        style={{
-          backgroundColor: showGreen && "rgba(51, 255, 0)",
-          height: "100px",
-          width: "100px",
-          margin: "10px auto",
-        }}
-      ></div>
+      <div>
+        <img id="gif" src={gifState} alt="idle" />
+      </div>
       <div id="timer-info">
         <table>
-          <tr>
-            <td>Timer Start:</td>
-            <td>{timerStart.format("dddd, MMMM Do YYYY, h:mm:ss a")}</td>
-          </tr>
-          <tr>
-            <td>Timer End:</td>
-            <td>{timerEnd.format("dddd, MMMM Do YYYY, h:mm:ss a")}</td>
-          </tr>
-          <tr>
-            <td>Time Elapsed:</td>
-            <td>
-              <span>{timeElapsedDiff.hours()}h </span>
-              <span>{timeElapsedDiff.minutes()}m </span>
-              <span>{timeElapsedDiff.seconds()}s</span>
-            </td>
-          </tr>
-          <tr>
-            <td>-1 minute</td>
-            <td>{oneMinCount}</td>
-          </tr>
-          <tr>
-            <td>-5 minutes</td>
-            <td>{fiveMinCount}</td>
-          </tr>
-          <tr>
-            <td>Total Time Skipped:</td>
-            <td>{oneMinCount + fiveMinCount * 5} minutes</td>
-          </tr>
+          <tbody>
+            <tr>
+              <td>Timer Start:</td>
+              <td>{timerStart.format("dddd, MMMM Do YYYY, h:mm:ss a")}</td>
+            </tr>
+            <tr>
+              <td>Timer End:</td>
+              <td>{timerEnd.format("dddd, MMMM Do YYYY, h:mm:ss a")}</td>
+            </tr>
+            <tr>
+              <td>Time Elapsed:</td>
+              <td>
+                <span>{timeElapsedDiff.hours()}h </span>
+                <span>{timeElapsedDiff.minutes()}m </span>
+                <span>{timeElapsedDiff.seconds()}s</span>
+              </td>
+            </tr>
+            <tr>
+              <td>-1 minute</td>
+              <td>{oneMinCount}</td>
+            </tr>
+            <tr>
+              <td>-5 minutes</td>
+              <td>{fiveMinCount}</td>
+            </tr>
+            <tr>
+              <td>Total Time Skipped:</td>
+              <td>{oneMinCount + fiveMinCount * 5} minutes</td>
+            </tr>
+          </tbody>
         </table>
       </div>
     </>

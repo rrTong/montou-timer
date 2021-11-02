@@ -20,6 +20,11 @@
   border-radius: 0 8px 8px 0;
 }
 
+#gif {
+  width: 100%;
+  margin: 20px auto;
+}
+
 .button:hover {
   background-color: rgb(214, 211, 199);
   cursor: pointer;

@@ -61,7 +61,7 @@ const Timer = () => {
             resolve(setGifState(idle));
           });
           promise.then(() => {
-            setGifState(basic);
+            setGifState(follow);
             gifTimer = 30;
           });
         }}
@@ -78,7 +78,7 @@ const Timer = () => {
             resolve(setGifState(idle));
           });
           promise.then(() => {
-            setGifState(follow);
+            setGifState(sub);
             gifTimer = 30;
           });
         }}

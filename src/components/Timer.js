@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 import moment from "moment";
 import accurateTimer from "../hooks/accurateTimer";
-import idleBasic from "../assets/idle-basic-small.gif";
-import follow from "../assets/follow-small.gif";
-import sub from "../assets/sub-small.gif";
-import giveaway from "../assets/giveaway-small.gif";
+import idle from "../assets/idle.gif";
+import follow from "../assets/follow.gif";
+import sub from "../assets/sub.gif";
+import giveaway from "../assets/giveaway.gif";
 import "../styles/Timer.css";
 
 let oneMinCount = 0;
@@ -19,7 +19,7 @@ const Timer = ({ timerStart, timerEnd }) => {
     moment().utcOffset(0).startOf("day").add(1, "seconds")
   );
   let timeElapsedDiff = moment.duration(timeElapsed);
-  const [gifState, setGifState] = useState(idleBasic);
+  const [gifState, setGifState] = useState(idle);
 
   if (timer.isSame(timerEnd) || timer.isAfter(timerEnd)) {
     if (gifState !== giveaway) setGifState(giveaway);
@@ -34,7 +34,7 @@ const Timer = ({ timerStart, timerEnd }) => {
       if (gifTimer > 0) {
         gifTimer--;
       } else {
-        setGifState(idleBasic);
+        setGifState(idle);
       }
     }, 1000);
 
@@ -59,7 +59,7 @@ const Timer = ({ timerStart, timerEnd }) => {
           setTimer((prevTimer) => prevTimer.clone().add(1, "minutes"));
           oneMinCount++;
           const promise = new Promise((resolve, reject) => {
-            resolve(setGifState(idleBasic));
+            resolve(setGifState(idle));
           });
           promise.then(() => {
             setGifState(follow);
@@ -76,7 +76,7 @@ const Timer = ({ timerStart, timerEnd }) => {
           setTimer((prevTimer) => prevTimer.clone().add(2, "minutes"));
           twoMinCount++;
           const promise = new Promise((resolve, reject) => {
-            resolve(setGifState(idleBasic));
+            resolve(setGifState(idle));
           });
           promise.then(() => {
             setGifState(sub);
@@ -93,7 +93,7 @@ const Timer = ({ timerStart, timerEnd }) => {
           setTimer((prevTimer) => prevTimer.clone().add(5, "minutes"));
           fiveMinCount++;
           const promise = new Promise((resolve, reject) => {
-            resolve(setGifState(idleBasic));
+            resolve(setGifState(idle));
           });
           promise.then(() => {
             setGifState(sub);

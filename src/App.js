@@ -31,8 +31,9 @@ function App() {
     <div className="App">
       <h1>Montou Timer</h1>
       <input type="text" onChange={(e) => handleTimerInput(e)} />
-      <button
-        className="button"
+      <input
+        type="submit"
+        value="Reset"
         onClick={() => {
           setTimerStart(moment());
           setTimerEnd(
@@ -42,9 +43,8 @@ function App() {
               .add(timerInputS, "seconds")
           );
         }}
-      >
-        restart
-      </button>
+      />
+
       {true && <Timer timerStart={timerStart} timerEnd={timerEnd} />}
     </div>
   );

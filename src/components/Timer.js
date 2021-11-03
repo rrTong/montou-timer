@@ -10,6 +10,7 @@ import "../styles/Timer.css";
 let oneMinCount = 0;
 let twoMinCount = 0;
 let fiveMinCount = 0;
+let timeSkipped = 0;
 let gifTimer = 0;
 
 const Timer = ({ timerStart, timerEnd }) => {
@@ -19,6 +20,36 @@ const Timer = ({ timerStart, timerEnd }) => {
     moment().utcOffset(0).startOf("day").add(1, "seconds")
   );
   let timeElapsedDiff = moment.duration(timeElapsed);
+
+  const [followInput, setFollowInput] = useState(1);
+  const [subInput, setSubInput] = useState(5);
+
+  const handleFollowInput = (e) => {
+    const re = /^\d*$/;
+    if (e.target.value.match(re)) {
+      setFollowInput(e.target.value);
+    }
+  };
+
+  const handleFollowSubmit = (e) => {
+    e.preventDefault();
+    timeSkipped += followInput;
+    setTimer((prevTimer) => prevTimer.clone().add(followInput, "minutes"));
+  };
+
+  const handleSubInput = (e) => {
+    const re = /^\d*$/;
+    if (e.target.value.match(re)) {
+      setSubInput(e.target.value);
+    }
+  };
+
+  const handleSubSubmit = (e) => {
+    e.preventDefault();
+    timeSkipped += subInput;
+    setTimer((prevTimer) => prevTimer.clone().add(subInput, "minutes"));
+  };
+
   const [gifState, setGifState] = useState(idle);
 
   if (timer.isSame(timerEnd) || timer.isAfter(timerEnd)) {
@@ -47,6 +78,7 @@ const Timer = ({ timerStart, timerEnd }) => {
     oneMinCount = 0;
     twoMinCount = 0;
     fiveMinCount = 0;
+    timeSkipped = 0;
   }, [timerStart, timerEnd]);
 
   return (
@@ -56,57 +88,82 @@ const Timer = ({ timerStart, timerEnd }) => {
         <span className="timer-text">{timeDiff.minutes()}m </span>
         <span className="timer-text">{timeDiff.seconds()}s</span>
       </div>
-      <button
-        className="button"
-        id="button-one-min"
-        onClick={() => {
-          setTimer((prevTimer) => prevTimer.clone().add(1, "minutes"));
-          oneMinCount++;
-          const promise = new Promise((resolve, reject) => {
-            resolve(setGifState(idle));
-          });
-          promise.then(() => {
-            setGifState(follow);
-            gifTimer = 30;
-          });
-        }}
-      >
-        -1 minute
-      </button>
-      <button
-        className="button"
-        id="button-two-min"
-        onClick={() => {
-          setTimer((prevTimer) => prevTimer.clone().add(2, "minutes"));
-          twoMinCount++;
-          const promise = new Promise((resolve, reject) => {
-            resolve(setGifState(idle));
-          });
-          promise.then(() => {
-            setGifState(sub);
-            gifTimer = 30;
-          });
-        }}
-      >
-        -2 minutes
-      </button>
-      <button
-        className="button"
-        id="button-five-min"
-        onClick={() => {
-          setTimer((prevTimer) => prevTimer.clone().add(5, "minutes"));
-          fiveMinCount++;
-          const promise = new Promise((resolve, reject) => {
-            resolve(setGifState(idle));
-          });
-          promise.then(() => {
-            setGifState(sub);
-            gifTimer = 30;
-          });
-        }}
-      >
-        -5 minutes
-      </button>
+      <div id="dashboard">
+        <div>
+          <button
+            className="button"
+            id="button-one-min"
+            onClick={() => {
+              setTimer((prevTimer) => prevTimer.clone().add(1, "minutes"));
+              oneMinCount++;
+              timeSkipped += 1;
+              const promise = new Promise((resolve, reject) => {
+                resolve(setGifState(idle));
+              });
+              promise.then(() => {
+                setGifState(follow);
+                gifTimer = 30;
+              });
+            }}
+          >
+            -1 minute
+          </button>
+          <button
+            className="button"
+            id="button-two-min"
+            onClick={() => {
+              setTimer((prevTimer) => prevTimer.clone().add(2, "minutes"));
+              twoMinCount++;
+              timeSkipped += 2;
+              const promise = new Promise((resolve, reject) => {
+                resolve(setGifState(idle));
+              });
+              promise.then(() => {
+                setGifState(sub);
+                gifTimer = 30;
+              });
+            }}
+          >
+            -2 minutes
+          </button>
+          <button
+            className="button"
+            id="button-five-min"
+            onClick={() => {
+              setTimer((prevTimer) => prevTimer.clone().add(5, "minutes"));
+              fiveMinCount++;
+              timeSkipped += 5;
+              const promise = new Promise((resolve, reject) => {
+                resolve(setGifState(idle));
+              });
+              promise.then(() => {
+                setGifState(sub);
+                gifTimer = 30;
+              });
+            }}
+          >
+            -5 minutes
+          </button>
+        </div>
+        <div className="dashboard-panel">
+          <form onSubmit={(e) => handleFollowSubmit(e)}>
+            <input
+              type="text"
+              value={followInput}
+              onChange={(e) => handleFollowInput(e)}
+            />
+            <input type="submit" value="Follow" />
+          </form>
+          <form onSubmit={(e) => handleSubSubmit(e)}>
+            <input
+              type="text"
+              value={subInput}
+              onChange={(e) => handleSubInput(e)}
+            />
+            <input type="submit" value="Sub" />
+          </form>
+        </div>
+      </div>
       <div>
         <img id="gif" src={gifState} alt="montou-animation" />
       </div>
@@ -130,22 +187,20 @@ const Timer = ({ timerStart, timerEnd }) => {
               </td>
             </tr>
             <tr>
-              <td>-1 minute</td>
+              <td>-1 minute button</td>
               <td>{oneMinCount}</td>
             </tr>
             <tr>
-              <td>-2 minute</td>
+              <td>-2 minute button</td>
               <td>{twoMinCount}</td>
             </tr>
             <tr>
-              <td>-5 minutes</td>
+              <td>-5 minutes button</td>
               <td>{fiveMinCount}</td>
             </tr>
             <tr>
               <td>Total Time Skipped:</td>
-              <td>
-                {oneMinCount + twoMinCount * 2 + fiveMinCount * 5} minutes
-              </td>
+              <td>{timeSkipped} minutes</td>
             </tr>
           </tbody>
         </table>

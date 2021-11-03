@@ -2,6 +2,15 @@
   font-size: 5rem;
 }
 
+#dashboard {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.dashboard-panel {
+  display: flex;
+}
+
 .button {
   font-size: 1rem;
   font-family: "Roboto Condensed", sans-serif;

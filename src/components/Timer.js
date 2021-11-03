@@ -24,6 +24,18 @@ const Timer = ({ timerStart, timerEnd }) => {
   const [followInput, setFollowInput] = useState(1);
   const [subInput, setSubInput] = useState(5);
 
+  const skipTime = (amount, gif) => {
+    timeSkipped += amount;
+    setTimer((prevTimer) => prevTimer.clone().add(amount, "minutes"));
+    const promise = new Promise((resolve, reject) => {
+      resolve(setGifState(idle));
+    });
+    promise.then(() => {
+      setGifState(gif);
+      gifTimer = 30;
+    });
+  };
+
   const handleFollowInput = (e) => {
     const re = /^\d*$/;
     if (e.target.value.match(re)) {
@@ -33,8 +45,7 @@ const Timer = ({ timerStart, timerEnd }) => {
 
   const handleFollowSubmit = (e) => {
     e.preventDefault();
-    timeSkipped += followInput;
-    setTimer((prevTimer) => prevTimer.clone().add(followInput, "minutes"));
+    skipTime(followInput, follow);
   };
 
   const handleSubInput = (e) => {
@@ -46,8 +57,7 @@ const Timer = ({ timerStart, timerEnd }) => {
 
   const handleSubSubmit = (e) => {
     e.preventDefault();
-    timeSkipped += subInput;
-    setTimer((prevTimer) => prevTimer.clone().add(subInput, "minutes"));
+    skipTime(subInput, sub);
   };
 
   const [gifState, setGifState] = useState(idle);

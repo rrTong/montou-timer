@@ -7,14 +7,12 @@ import sub from "../assets/sub.gif";
 import giveaway from "../assets/giveaway.gif";
 import "../styles/Timer.css";
 
-const timerStart = moment();
-const timerEnd = moment().add(2, "hours");
 let oneMinCount = 0;
 let twoMinCount = 0;
 let fiveMinCount = 0;
 let gifTimer = 0;
 
-const Timer = () => {
+const Timer = ({ timerStart, timerEnd }) => {
   const [timer, setTimer] = useState(moment());
   let timeDiff = moment.duration(timerEnd.diff(timer));
   const [timeElapsed, setTimeElapsed] = useState(
@@ -42,6 +40,10 @@ const Timer = () => {
 
     return () => clearInterval(interval);
   }, []);
+
+  useEffect(() => {
+    setTimeElapsed(moment().utcOffset(0).startOf("day"));
+  }, [timerStart, timerEnd]);
 
   return (
     <>

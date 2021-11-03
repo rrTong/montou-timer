@@ -42,7 +42,11 @@ const Timer = ({ timerStart, timerEnd }) => {
   }, []);
 
   useEffect(() => {
-    setTimeElapsed(moment().utcOffset(0).startOf("day"));
+    setTimeElapsed(moment().utcOffset(0).startOf("day").add(1, "seconds"));
+    setTimer(moment());
+    oneMinCount = 0;
+    twoMinCount = 0;
+    fiveMinCount = 0;
   }, [timerStart, timerEnd]);
 
   return (

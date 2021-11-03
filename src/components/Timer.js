@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 import moment from "moment";
 import accurateTimer from "../hooks/accurateTimer";
-import idleBasic from "../assets/idle-basic.gif";
-import follow from "../assets/follow.gif";
-import sub from "../assets/sub.gif";
-import giveaway from "../assets/giveaway.gif";
+import idleBasic from "../assets/idle-basic-small.gif";
+import follow from "../assets/follow-small.gif";
+import sub from "../assets/sub-small.gif";
+import giveaway from "../assets/giveaway-small.gif";
 import "../styles/Timer.css";
 
 const timerStart = moment();

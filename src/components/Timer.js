@@ -25,7 +25,7 @@ const Timer = ({ timerStart, timerEnd }) => {
   const [subInput, setSubInput] = useState(5);
 
   const skipTime = (amount, gif) => {
-    timeSkipped += amount;
+    timeSkipped += Number(amount);
     setTimer((prevTimer) => prevTimer.clone().add(amount, "minutes"));
     const promise = new Promise((resolve, reject) => {
       resolve(setGifState(idle));
@@ -158,7 +158,8 @@ const Timer = ({ timerStart, timerEnd }) => {
         <div className="dashboard-panel">
           <form onSubmit={(e) => handleFollowSubmit(e)}>
             <input
-              type="text"
+              className="input"
+              type="number"
               value={followInput}
               onChange={(e) => handleFollowInput(e)}
             />
@@ -166,7 +167,8 @@ const Timer = ({ timerStart, timerEnd }) => {
           </form>
           <form onSubmit={(e) => handleSubSubmit(e)}>
             <input
-              type="text"
+              className="input"
+              type="number"
               value={subInput}
               onChange={(e) => handleSubInput(e)}
             />

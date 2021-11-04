@@ -162,7 +162,7 @@ const Timer = ({ timerStart, timerEnd }) => {
               value={followInput}
               onChange={(e) => handleFollowInput(e)}
             />
-            <input type="submit" value="Follow" />
+            <input className="button" type="submit" value="Follow" />
           </form>
           <form onSubmit={(e) => handleSubSubmit(e)}>
             <input
@@ -170,7 +170,7 @@ const Timer = ({ timerStart, timerEnd }) => {
               value={subInput}
               onChange={(e) => handleSubInput(e)}
             />
-            <input type="submit" value="Sub" />
+            <input className="button" type="submit" value="Sub" />
           </form>
         </div>
       </div>

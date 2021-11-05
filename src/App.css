@@ -3,6 +3,35 @@
   padding: 20px;
 }
 
+.input {
+  font-size: 1rem;
+  font-family: "Roboto Condensed", sans-serif;
+  border: none;
+  border-radius: 4px;
+  padding: 5px 10px;
+  margin: 0 5px;
+  width: 75px;
+  filter: drop-shadow(1px 1px 2px #111111);
+}
+
+.button {
+  font-size: 1rem;
+  font-family: "Roboto Condensed", sans-serif;
+  background-color: rgb(228, 226, 218);
+  border: none;
+  padding: 5px 10px;
+  transition: 0.2s;
+  filter: drop-shadow(1px 1px 2px #111111);
+  border-radius: 8px;
+}
+
+#button-start {
+  border-radius: 8px 0 0 8px;
+}
+
+#button-clear {
+  border-radius: 0 8px 8px 0;
+}
 h1 {
   color: rgb(248, 248, 255);
 }

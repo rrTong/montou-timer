@@ -13,10 +13,12 @@ function App() {
 
   const handleTimerInput = (e) => {
     const re = /^\d{0,2}:?[0-9]{0,2}:?[0-9]{0,2}$/;
-    const two_chars_no_colons_regex = /([^:]{2}(?!:))/;
+    const reAddColon = /(\d{2}(?!:))/;
 
-    if (e.target.value.match(re)) {
-      setTimerInput(e.target.value.replace(two_chars_no_colons_regex, "$1:"));
+    if (e.target.value.match(re) && e.target.value.length < 7) {
+      setTimerInput(e.target.value.replace(reAddColon, "$1:"));
+    } else if (e.target.value.match(re) && e.target.value.length < 9) {
+      setTimerInput(e.target.value);
     }
 
     let [h, m, s] = e.target.value.split(":");
@@ -42,16 +44,28 @@ function App() {
       <h1>Montou Timer</h1>
       <form onSubmit={(e) => handleTimerSubmit(e)}>
         <input
+          className="input"
           type="text"
+          placeholder="02:00:00"
           value={timerInput}
           onChange={(e) => handleTimerInput(e)}
         />
-        <input type="submit" value="Start" />
         <input
+          className="button"
+          id="button-start"
+          type="submit"
+          value="Start"
+        />
+        <input
+          className="button"
+          id="button-clear"
           type="reset"
           value="Clear"
           onClick={() => {
             setTimerInput("");
+            setTimerInputH(2);
+            setTimerInputM(0);
+            setTimerInputS(0);
           }}
         />
       </form>

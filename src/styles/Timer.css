@@ -34,8 +34,12 @@
   border-radius: 8px;
 }
 
-#button-one-min {
+#button-thirty-sec {
   border-radius: 8px 0 0 8px;
+}
+
+#button-one-min {
+  border-radius: 0;
 }
 
 #button-two-min {

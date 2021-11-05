@@ -25,11 +25,11 @@ const Timer = ({ timerStart, timerEnd }) => {
   const [subInput, setSubInput] = useState(5);
 
   const skipTime = (amount, unit, gif) => {
-    if (unit == "minutes") {
+    if (unit === "minutes") {
       minSkipped += Number(amount);
-    } else if (unit == "seconds") {
+    } else if (unit === "seconds") {
       secSkipped += Number(amount);
-    } else if (unit == "milliseconds") {
+    } else if (unit === "milliseconds") {
       msSkipped += Number(amount);
     }
     setTimer((prevTimer) => prevTimer.clone().add(amount, unit));

@@ -14,10 +14,12 @@ function App() {
   const handleTimerInput = (e) => {
     const re = /^\d{0,2}:?[0-9]{0,2}:?[0-9]{0,2}$/;
     const reAddColon = /(\d{2}(?!:))/;
+    let charArray = [...e.target.value];
+    let numColons = charArray.filter((c) => c === ":").length;
 
-    if (e.target.value.match(re) && e.target.value.length < 7) {
+    if (e.target.value.match(re) && numColons < 2) {
       setTimerInput(e.target.value.replace(reAddColon, "$1:"));
-    } else if (e.target.value.match(re) && e.target.value.length < 9) {
+    } else if (e.target.value.match(re) && numColons >= 2) {
       setTimerInput(e.target.value);
     }
 

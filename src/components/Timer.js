@@ -9,6 +9,7 @@ import "../styles/Timer.css";
 
 let minSkipped = 0;
 let secSkipped = 0;
+let msSkipped = 0;
 let gifTimer = 0;
 
 const Timer = ({ timerStart, timerEnd }) => {
@@ -19,12 +20,19 @@ const Timer = ({ timerStart, timerEnd }) => {
   );
   let timeElapsedDiff = moment.duration(timeElapsed);
 
+  const [bitsInput, setBitsInput] = useState(1);
   const [followInput, setFollowInput] = useState(1);
   const [subInput, setSubInput] = useState(5);
 
-  const skipTime = (amount, gif) => {
-    minSkipped += Number(amount);
-    setTimer((prevTimer) => prevTimer.clone().add(amount, "minutes"));
+  const skipTime = (amount, unit, gif) => {
+    if (unit == "minutes") {
+      minSkipped += Number(amount);
+    } else if (unit == "seconds") {
+      secSkipped += Number(amount);
+    } else if (unit == "milliseconds") {
+      msSkipped += Number(amount);
+    }
+    setTimer((prevTimer) => prevTimer.clone().add(amount, unit));
     const promise = new Promise((resolve, reject) => {
       resolve(setGifState(idle));
     });
@@ -32,6 +40,18 @@ const Timer = ({ timerStart, timerEnd }) => {
       setGifState(gif);
       gifTimer = 30;
     });
+  };
+
+  const handleBitsInput = (e) => {
+    const re = /^\d*$/;
+    if (e.target.value.match(re)) {
+      setBitsInput(e.target.value);
+    }
+  };
+
+  const handleBitsSubmit = (e) => {
+    e.preventDefault();
+    skipTime(bitsInput * 600, "milliseconds", follow);
   };
 
   const handleFollowInput = (e) => {
@@ -43,7 +63,7 @@ const Timer = ({ timerStart, timerEnd }) => {
 
   const handleFollowSubmit = (e) => {
     e.preventDefault();
-    skipTime(followInput, follow);
+    skipTime(followInput, "minutes", follow);
   };
 
   const handleSubInput = (e) => {
@@ -55,7 +75,7 @@ const Timer = ({ timerStart, timerEnd }) => {
 
   const handleSubSubmit = (e) => {
     e.preventDefault();
-    skipTime(subInput, sub);
+    skipTime(subInput, "minutes", sub);
   };
 
   const [gifState, setGifState] = useState(idle);
@@ -85,6 +105,7 @@ const Timer = ({ timerStart, timerEnd }) => {
     setTimer(moment());
     minSkipped = 0;
     secSkipped = 0;
+    msSkipped = 0;
   }, [timerStart, timerEnd]);
 
   return (
@@ -166,6 +187,16 @@ const Timer = ({ timerStart, timerEnd }) => {
           </button>
         </div>
         <div className="dashboard-panel">
+          <form onSubmit={(e) => handleBitsSubmit(e)}>
+            <input
+              className="input"
+              type="number"
+              value={bitsInput}
+              onChange={(e) => handleBitsInput(e)}
+            />
+            <input className="input" disabled value={"600 ms"} />
+            <input className="button" type="submit" value="Bits" />
+          </form>
           <form onSubmit={(e) => handleFollowSubmit(e)}>
             <input
               className="input"
@@ -211,7 +242,8 @@ const Timer = ({ timerStart, timerEnd }) => {
             <tr>
               <td>Total Time Skipped:</td>
               <td>
-                {minSkipped} minutes, {secSkipped} seconds
+                {minSkipped} minutes, {secSkipped} seconds, {msSkipped}{" "}
+                milliseconds
               </td>
             </tr>
           </tbody>

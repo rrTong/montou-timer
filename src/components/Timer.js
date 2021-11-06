@@ -7,6 +7,7 @@ import sub from "../assets/sub.gif";
 import giveaway from "../assets/giveaway.gif";
 import "../styles/Timer.css";
 
+let paused = false;
 let minSkipped = 0;
 let secSkipped = 0;
 let msSkipped = 0;
@@ -106,10 +107,13 @@ const Timer = ({ timerStart, timerEnd }) => {
 
   useEffect(() => {
     const interval = accurateTimer(() => {
-      setTimer((prevTimer) => prevTimer.clone().add(1, "seconds"));
-      setTimeElapsed((prevTimeElapsed) =>
-        prevTimeElapsed.clone().add(1, "seconds")
-      );
+      if (!paused) {
+        setTimer((prevTimer) => prevTimer.clone().add(1, "seconds"));
+        setTimeElapsed((prevTimeElapsed) =>
+          prevTimeElapsed.clone().add(1, "seconds")
+        );
+      }
+      console.log(paused);
       if (gifTimer > 0) {
         gifTimer--;
       } else {
@@ -137,6 +141,11 @@ const Timer = ({ timerStart, timerEnd }) => {
       </div>
       <div id="dashboard">
         <div className="dashboard-panel">
+          <div>
+            <button className="button" onClick={() => (paused = !paused)}>
+              Pause Timer
+            </button>
+          </div>
           <div>
             <button
               className="button"
@@ -216,7 +225,12 @@ const Timer = ({ timerStart, timerEnd }) => {
         <div className="dashboard-panel">
           <form onSubmit={(e) => handleBitsSubmit(e)}>
             <input className="input" disabled value={"600"} />
-            <input type="radio" value="milliseconds" checked />
+            <input
+              type="radio"
+              value="milliseconds"
+              checked="checked"
+              disabled="disabled"
+            />
             <label className="radio-text">ms</label>
             <input
               className="input"
@@ -262,7 +276,12 @@ const Timer = ({ timerStart, timerEnd }) => {
               value={subInput}
               onChange={(e) => handleSubInput(e)}
             />
-            <input type="radio" value="minutes" checked />
+            <input
+              type="radio"
+              value="minutes"
+              checked="checked"
+              disabled="disabled"
+            />
             <label className="radio-text">m</label>
             <input
               className="button"

@@ -201,13 +201,13 @@ const Timer = ({ timerStart, timerEnd }) => {
         </div>
         <div className="dashboard-panel">
           <form onSubmit={(e) => handleBitsSubmit(e)}>
+            <input className="input" disabled value={"600 ms"} />
             <input
               className="input"
               type="number"
               value={bitsInput}
               onChange={(e) => handleBitsInput(e)}
             />
-            <input className="input" disabled value={"600 ms"} />
             <input className="button" type="submit" value="Bits" />
           </form>
           <form onSubmit={(e) => handleFollowSubmit(e)}>

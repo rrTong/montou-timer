@@ -52,7 +52,11 @@ const Timer = ({ timerStart, timerEnd }) => {
 
   const handleBitsSubmit = (e) => {
     e.preventDefault();
-    skipTime(bitsInput * 600, "milliseconds", follow);
+    if (bitsInput < 500) {
+      skipTime(bitsInput * 600, "milliseconds", sub);
+    } else {
+      skipTime(bitsInput * 600, "milliseconds", follow);
+    }
   };
 
   const handleFollowInput = (e) => {

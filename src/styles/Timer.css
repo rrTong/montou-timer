@@ -54,6 +54,14 @@
   border-radius: 0 8px 8px 0;
 }
 
+#button-sub {
+  border-radius: 8px 0 0 8px;
+}
+
+#button-sub-x5 {
+  border-radius: 0 8px 8px 0;
+}
+
 #gif {
   width: 50%;
   margin: 20px auto;

@@ -84,7 +84,11 @@ const Timer = ({ timerStart, timerEnd }) => {
 
   const handleSubSubmit = (e) => {
     e.preventDefault();
-    skipTime(subInput, "minutes", sub);
+    if (e.nativeEvent.submitter.value === "x5") {
+      skipTime(subInput * 5, "minutes", sub);
+    } else {
+      skipTime(subInput, "minutes", sub);
+    }
   };
 
   const [gifState, setGifState] = useState(idle);
@@ -236,7 +240,18 @@ const Timer = ({ timerStart, timerEnd }) => {
               value={subInput}
               onChange={(e) => handleSubInput(e)}
             />
-            <input className="button" type="submit" value="Sub" />
+            <input
+              className="button"
+              id="button-sub"
+              type="submit"
+              value="Sub"
+            />
+            <input
+              className="button"
+              id="button-sub-x5"
+              type="submit"
+              value="x5"
+            />
           </form>
         </div>
       </div>

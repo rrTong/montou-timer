@@ -20,7 +20,7 @@ const Timer = ({ timerStart, timerEnd }) => {
   );
   let timeElapsedDiff = moment.duration(timeElapsed);
 
-  const [bitsInput, setBitsInput] = useState(1);
+  const [bitsInput, setBitsInput] = useState(100);
   const [followInput, setFollowInput] = useState(30);
   const [followSelectedOption, setFollowSelectedOption] = useState("seconds");
   const [subInput, setSubInput] = useState(5);

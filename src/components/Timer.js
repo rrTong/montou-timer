@@ -21,7 +21,8 @@ const Timer = ({ timerStart, timerEnd }) => {
   let timeElapsedDiff = moment.duration(timeElapsed);
 
   const [bitsInput, setBitsInput] = useState(1);
-  const [followInput, setFollowInput] = useState(1);
+  const [followInput, setFollowInput] = useState(30);
+  const [followSelectedOption, setFollowSelectedOption] = useState("seconds");
   const [subInput, setSubInput] = useState(5);
 
   const skipTime = (amount, unit, gif) => {
@@ -61,9 +62,13 @@ const Timer = ({ timerStart, timerEnd }) => {
     }
   };
 
+  const handleFollowSelectedOption = (e) => {
+    setFollowSelectedOption(e.target.value);
+  };
+
   const handleFollowSubmit = (e) => {
     e.preventDefault();
-    skipTime(followInput, "minutes", follow);
+    skipTime(followInput, followSelectedOption, follow);
   };
 
   const handleSubInput = (e) => {
@@ -204,6 +209,20 @@ const Timer = ({ timerStart, timerEnd }) => {
               value={followInput}
               onChange={(e) => handleFollowInput(e)}
             />
+            <input
+              type="radio"
+              value="minutes"
+              checked={followSelectedOption === "minutes"}
+              onChange={(e) => handleFollowSelectedOption(e)}
+            />
+            <label>m</label>
+            <input
+              type="radio"
+              value="seconds"
+              checked={followSelectedOption === "seconds"}
+              onChange={(e) => handleFollowSelectedOption(e)}
+            />
+            <label className="radio-text">s</label>
             <input className="button" type="submit" value="Follow" />
           </form>
           <form onSubmit={(e) => handleSubSubmit(e)}>

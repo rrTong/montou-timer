@@ -23,6 +23,10 @@
   filter: drop-shadow(1px 1px 2px #111111);
 }
 
+.radio-text {
+  margin-right: 5px;
+}
+
 .button {
   font-size: 1rem;
   font-family: "Roboto Condensed", sans-serif;

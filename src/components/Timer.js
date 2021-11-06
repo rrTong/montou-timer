@@ -20,6 +20,7 @@ const Timer = ({ timerStart, timerEnd }) => {
     moment().utcOffset(0).startOf("day").add(1, "seconds")
   );
   let timeElapsedDiff = moment.duration(timeElapsed);
+  const [pausedButtonText, setPausedButtonText] = useState("Pause Timer");
 
   const [bitsInput, setBitsInput] = useState(100);
   const [followInput, setFollowInput] = useState(30);
@@ -31,6 +32,15 @@ const Timer = ({ timerStart, timerEnd }) => {
     setFollowInput(30);
     setFollowSelectedOption("seconds");
     setSubInput(5);
+  };
+
+  const handlePause = () => {
+    if (paused) {
+      setPausedButtonText("Pause Timer");
+    } else {
+      setPausedButtonText("Resume Timer");
+    }
+    paused = !paused;
   };
 
   const skipTime = (amount, unit, gif) => {
@@ -142,8 +152,8 @@ const Timer = ({ timerStart, timerEnd }) => {
       <div id="dashboard">
         <div className="dashboard-panel">
           <div>
-            <button className="button" onClick={() => (paused = !paused)}>
-              Pause Timer
+            <button className="button" onClick={handlePause}>
+              {pausedButtonText}
             </button>
           </div>
           <div>

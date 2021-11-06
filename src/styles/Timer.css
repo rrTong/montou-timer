@@ -4,11 +4,14 @@
 
 #dashboard {
   display: flex;
+  flex-direction: column;
   justify-content: space-evenly;
 }
 
 .dashboard-panel {
+  margin-top: 20px;
   display: flex;
+  justify-content: space-evenly;
   gap: 10px;
 }
 

@@ -25,6 +25,13 @@ const Timer = ({ timerStart, timerEnd }) => {
   const [followSelectedOption, setFollowSelectedOption] = useState("seconds");
   const [subInput, setSubInput] = useState(5);
 
+  const handleDefaultInput = () => {
+    setBitsInput(100);
+    setFollowInput(30);
+    setFollowSelectedOption("seconds");
+    setSubInput(5);
+  };
+
   const skipTime = (amount, unit, gif) => {
     if (unit === "minutes") {
       minSkipped += Number(amount);
@@ -129,75 +136,82 @@ const Timer = ({ timerStart, timerEnd }) => {
         <span className="timer-text">{timeDiff.seconds()}s</span>
       </div>
       <div id="dashboard">
-        <div>
-          <button
-            className="button"
-            id="button-thirty-sec"
-            onClick={() => {
-              setTimer((prevTimer) => prevTimer.clone().add(30, "seconds"));
-              secSkipped += 30;
-              const promise = new Promise((resolve, reject) => {
-                resolve(setGifState(idle));
-              });
-              promise.then(() => {
-                setGifState(follow);
-                gifTimer = 30;
-              });
-            }}
-          >
-            -30 seconds
-          </button>
-          <button
-            className="button"
-            id="button-one-min"
-            onClick={() => {
-              setTimer((prevTimer) => prevTimer.clone().add(1, "minutes"));
-              minSkipped += 1;
-              const promise = new Promise((resolve, reject) => {
-                resolve(setGifState(idle));
-              });
-              promise.then(() => {
-                setGifState(follow);
-                gifTimer = 30;
-              });
-            }}
-          >
-            -1 minute
-          </button>
-          <button
-            className="button"
-            id="button-two-min"
-            onClick={() => {
-              setTimer((prevTimer) => prevTimer.clone().add(2, "minutes"));
-              minSkipped += 2;
-              const promise = new Promise((resolve, reject) => {
-                resolve(setGifState(idle));
-              });
-              promise.then(() => {
-                setGifState(sub);
-                gifTimer = 30;
-              });
-            }}
-          >
-            -2 minutes
-          </button>
-          <button
-            className="button"
-            id="button-five-min"
-            onClick={() => {
-              setTimer((prevTimer) => prevTimer.clone().add(5, "minutes"));
-              minSkipped += 5;
-              const promise = new Promise((resolve, reject) => {
-                resolve(setGifState(idle));
-              });
-              promise.then(() => {
-                setGifState(sub);
-                gifTimer = 30;
-              });
-            }}
-          >
-            -5 minutes
-          </button>
+        <div className="dashboard-panel">
+          <div>
+            <button
+              className="button"
+              id="button-thirty-sec"
+              onClick={() => {
+                setTimer((prevTimer) => prevTimer.clone().add(30, "seconds"));
+                secSkipped += 30;
+                const promise = new Promise((resolve, reject) => {
+                  resolve(setGifState(idle));
+                });
+                promise.then(() => {
+                  setGifState(follow);
+                  gifTimer = 30;
+                });
+              }}
+            >
+              -30 seconds
+            </button>
+            <button
+              className="button"
+              id="button-one-min"
+              onClick={() => {
+                setTimer((prevTimer) => prevTimer.clone().add(1, "minutes"));
+                minSkipped += 1;
+                const promise = new Promise((resolve, reject) => {
+                  resolve(setGifState(idle));
+                });
+                promise.then(() => {
+                  setGifState(follow);
+                  gifTimer = 30;
+                });
+              }}
+            >
+              -1 minute
+            </button>
+            <button
+              className="button"
+              id="button-two-min"
+              onClick={() => {
+                setTimer((prevTimer) => prevTimer.clone().add(2, "minutes"));
+                minSkipped += 2;
+                const promise = new Promise((resolve, reject) => {
+                  resolve(setGifState(idle));
+                });
+                promise.then(() => {
+                  setGifState(sub);
+                  gifTimer = 30;
+                });
+              }}
+            >
+              -2 minutes
+            </button>
+            <button
+              className="button"
+              id="button-five-min"
+              onClick={() => {
+                setTimer((prevTimer) => prevTimer.clone().add(5, "minutes"));
+                minSkipped += 5;
+                const promise = new Promise((resolve, reject) => {
+                  resolve(setGifState(idle));
+                });
+                promise.then(() => {
+                  setGifState(sub);
+                  gifTimer = 30;
+                });
+              }}
+            >
+              -5 minutes
+            </button>
+          </div>
+          <div>
+            <button className="button" onClick={handleDefaultInput}>
+              Default Custom Input
+            </button>
+          </div>
         </div>
         <div className="dashboard-panel">
           <form onSubmit={(e) => handleBitsSubmit(e)}>

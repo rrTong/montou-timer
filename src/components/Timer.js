@@ -201,14 +201,22 @@ const Timer = ({ timerStart, timerEnd }) => {
         </div>
         <div className="dashboard-panel">
           <form onSubmit={(e) => handleBitsSubmit(e)}>
-            <input className="input" disabled value={"600 ms"} />
+            <input className="input" disabled value={"600"} />
+            <input type="radio" value="milliseconds" checked />
+            <label className="radio-text">ms</label>
             <input
               className="input"
+              id="input-bits"
               type="number"
               value={bitsInput}
               onChange={(e) => handleBitsInput(e)}
             />
-            <input className="button" type="submit" value="Bits" />
+            <input
+              className="button"
+              id="button-bits"
+              type="submit"
+              value="Bits"
+            />
           </form>
           <form onSubmit={(e) => handleFollowSubmit(e)}>
             <input
@@ -240,6 +248,8 @@ const Timer = ({ timerStart, timerEnd }) => {
               value={subInput}
               onChange={(e) => handleSubInput(e)}
             />
+            <input type="radio" value="minutes" checked />
+            <label className="radio-text">m</label>
             <input
               className="button"
               id="button-sub"

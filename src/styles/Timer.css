@@ -26,6 +26,10 @@
   filter: drop-shadow(1px 1px 2px #111111);
 }
 
+#input-bits {
+  margin: 0;
+}
+
 .radio-text {
   margin-right: 10px;
 }
@@ -54,6 +58,10 @@
 }
 
 #button-five-min {
+  border-radius: 0 8px 8px 0;
+}
+
+#button-bits {
   border-radius: 0 8px 8px 0;
 }
 

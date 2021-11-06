@@ -123,7 +123,6 @@ const Timer = ({ timerStart, timerEnd }) => {
           prevTimeElapsed.clone().add(1, "seconds")
         );
       }
-      console.log(paused);
       if (gifTimer > 0) {
         gifTimer--;
       } else {

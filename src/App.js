@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Timer from "./components/Timer";
 import moment from "moment";
-import "./App.css";
+import "./App.scss";
 
 function App() {
   const [timerStart, setTimerStart] = useState(moment());

@@ -1,7 +1,7 @@
 #timer-app {
   width: 100%;
   .timer-text {
-    font-size: 5rem;
+    font-size: 3rem;
   }
   #gif {
     width: 50%;
@@ -92,4 +92,23 @@
 #timer-info {
   display: flex;
   flex-direction: column;
+}
+
+/* DESKTOP VIEW */
+@media only screen and (min-width: 768px) {
+  #timer-app {
+    display: flex;
+
+    #timer-view {
+      width: 40%;
+
+      #gif {
+        width: 75%;
+      }
+    }
+
+    #timer-sidebar {
+      width: 60%;
+    }
+  }
 }

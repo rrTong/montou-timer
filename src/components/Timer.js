@@ -56,6 +56,7 @@ const Timer = ({ timerStart, timerEnd }) => {
       msSkipped += Number(amount);
     }
     setTimer((prevTimer) => prevTimer.clone().add(amount, unit));
+    let copyTimeDiff = timeDiff;
     setTimerHistoryLog([
       ...timerHistoryLog,
       {
@@ -63,10 +64,10 @@ const Timer = ({ timerStart, timerEnd }) => {
         type: type,
         amount: amount,
         unit: unit,
-        oldTimer: `${timeDiff.hours()}h  ${timeDiff.minutes()}m ${timeDiff.seconds()}s`,
-        newTimer: `${timeDiff.hours()}h  ${timeDiff
+        oldTimer: `${copyTimeDiff.hours()}h  ${copyTimeDiff.minutes()}m ${copyTimeDiff.seconds()}s`,
+        newTimer: `${copyTimeDiff
           .subtract(amount, unit)
-          .minutes()}m ${timeDiff.seconds()}s`,
+          .hours()}h  ${copyTimeDiff.minutes()}m ${copyTimeDiff.seconds()}s`,
       },
     ]);
     console.log(timerHistoryLog);

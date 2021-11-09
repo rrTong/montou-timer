@@ -1,0 +1,10 @@
+#timer-history {
+  background-color: rgb(0, 51, 102);
+  margin: 20px auto;
+  width: 80%;
+  height: 20vh;
+  overflow-y: scroll;
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: flex-start;
+}

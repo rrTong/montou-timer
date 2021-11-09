@@ -1,3 +1,5 @@
+import TimerHistory from "./TimerHistory";
+
 import { useState, useEffect } from "react";
 import moment from "moment";
 import accurateTimer from "../hooks/accurateTimer";
@@ -27,6 +29,8 @@ const Timer = ({ timerStart, timerEnd }) => {
   const [followSelectedOption, setFollowSelectedOption] = useState("seconds");
   const [subInput, setSubInput] = useState(5);
 
+  const [timerHistoryLog, setTimerHistoryLog] = useState([]);
+
   const handleDefaultInput = () => {
     setBitsInput(100);
     setFollowInput(60);
@@ -43,7 +47,7 @@ const Timer = ({ timerStart, timerEnd }) => {
     paused = !paused;
   };
 
-  const skipTime = (amount, unit, gif) => {
+  const skipTime = (type, amount, unit, gif) => {
     if (unit === "minutes") {
       minSkipped += Number(amount);
     } else if (unit === "seconds") {
@@ -52,6 +56,20 @@ const Timer = ({ timerStart, timerEnd }) => {
       msSkipped += Number(amount);
     }
     setTimer((prevTimer) => prevTimer.clone().add(amount, unit));
+    setTimerHistoryLog([
+      ...timerHistoryLog,
+      {
+        time: moment().format("hh:mm:ss a"),
+        type: type,
+        amount: amount,
+        unit: unit,
+        oldTimer: `${timeDiff.hours()}h  ${timeDiff.minutes()}m ${timeDiff.seconds()}s`,
+        newTimer: `${timeDiff.hours()}h  ${timeDiff
+          .subtract(amount, unit)
+          .minutes()}m ${timeDiff.seconds()}s`,
+      },
+    ]);
+    console.log(timerHistoryLog);
     const promise = new Promise((resolve, reject) => {
       resolve(setGifState(idle));
     });
@@ -71,9 +89,9 @@ const Timer = ({ timerStart, timerEnd }) => {
   const handleBitsSubmit = (e) => {
     e.preventDefault();
     if (bitsInput < 500) {
-      skipTime(bitsInput * 600, "milliseconds", sub);
+      skipTime("bits", bitsInput * 600, "milliseconds", follow);
     } else {
-      skipTime(bitsInput * 600, "milliseconds", follow);
+      skipTime("bits", bitsInput * 600, "milliseconds", sub);
     }
   };
 
@@ -90,7 +108,7 @@ const Timer = ({ timerStart, timerEnd }) => {
 
   const handleFollowSubmit = (e) => {
     e.preventDefault();
-    skipTime(followInput, followSelectedOption, follow);
+    skipTime("follow", followInput, followSelectedOption, follow);
   };
 
   const handleSubInput = (e) => {
@@ -103,9 +121,9 @@ const Timer = ({ timerStart, timerEnd }) => {
   const handleSubSubmit = (e) => {
     e.preventDefault();
     if (e.nativeEvent.submitter.value === "x5") {
-      skipTime(subInput * 5, "minutes", sub);
+      skipTime("sub", subInput * 5, "minutes", sub);
     } else {
-      skipTime(subInput, "minutes", sub);
+      skipTime("sub", subInput, "minutes", sub);
     }
   };
 
@@ -166,15 +184,7 @@ const Timer = ({ timerStart, timerEnd }) => {
                 className="button"
                 id="button-thirty-sec"
                 onClick={() => {
-                  setTimer((prevTimer) => prevTimer.clone().add(30, "seconds"));
-                  secSkipped += 30;
-                  const promise = new Promise((resolve, reject) => {
-                    resolve(setGifState(idle));
-                  });
-                  promise.then(() => {
-                    setGifState(follow);
-                    gifTimer = 30;
-                  });
+                  skipTime("follow", 30, "seconds", follow);
                 }}
               >
                 -30 seconds
@@ -183,15 +193,7 @@ const Timer = ({ timerStart, timerEnd }) => {
                 className="button"
                 id="button-one-min"
                 onClick={() => {
-                  setTimer((prevTimer) => prevTimer.clone().add(1, "minutes"));
-                  minSkipped += 1;
-                  const promise = new Promise((resolve, reject) => {
-                    resolve(setGifState(idle));
-                  });
-                  promise.then(() => {
-                    setGifState(follow);
-                    gifTimer = 30;
-                  });
+                  skipTime("follow", 1, "minutes", follow);
                 }}
               >
                 -1 minute
@@ -200,15 +202,7 @@ const Timer = ({ timerStart, timerEnd }) => {
                 className="button"
                 id="button-two-min"
                 onClick={() => {
-                  setTimer((prevTimer) => prevTimer.clone().add(2, "minutes"));
-                  minSkipped += 2;
-                  const promise = new Promise((resolve, reject) => {
-                    resolve(setGifState(idle));
-                  });
-                  promise.then(() => {
-                    setGifState(sub);
-                    gifTimer = 30;
-                  });
+                  skipTime("sub", 2, "minutes", sub);
                 }}
               >
                 -2 minutes
@@ -217,15 +211,7 @@ const Timer = ({ timerStart, timerEnd }) => {
                 className="button"
                 id="button-five-min"
                 onClick={() => {
-                  setTimer((prevTimer) => prevTimer.clone().add(5, "minutes"));
-                  minSkipped += 5;
-                  const promise = new Promise((resolve, reject) => {
-                    resolve(setGifState(idle));
-                  });
-                  promise.then(() => {
-                    setGifState(sub);
-                    gifTimer = 30;
-                  });
+                  skipTime("sub", 5, "minutes", sub);
                 }}
               >
                 -5 minutes
@@ -313,6 +299,7 @@ const Timer = ({ timerStart, timerEnd }) => {
             </form>
           </div>
         </div>
+        <TimerHistory timerHistoryLog={timerHistoryLog} />
         <div id="timer-info">
           <table>
             <tbody>

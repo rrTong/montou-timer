@@ -23,13 +23,13 @@ const Timer = ({ timerStart, timerEnd }) => {
   const [pausedButtonText, setPausedButtonText] = useState("Pause Timer");
 
   const [bitsInput, setBitsInput] = useState(100);
-  const [followInput, setFollowInput] = useState(30);
+  const [followInput, setFollowInput] = useState(60);
   const [followSelectedOption, setFollowSelectedOption] = useState("seconds");
   const [subInput, setSubInput] = useState(5);
 
   const handleDefaultInput = () => {
     setBitsInput(100);
-    setFollowInput(30);
+    setFollowInput(60);
     setFollowSelectedOption("seconds");
     setSubInput(5);
   };

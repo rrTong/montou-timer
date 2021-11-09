@@ -8,7 +8,7 @@ const TimerHistory = ({ timerHistoryLog }) => {
   };
 
   useEffect(() => {
-    scrollToBottom();
+    // scrollToBottom();
   }, [timerHistoryLog]);
 
   return (

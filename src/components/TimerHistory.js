@@ -4,11 +4,14 @@ import "../styles/TimerHistory.scss";
 const TimerHistory = ({ timerHistoryLog }) => {
   const bottomRef = useRef();
   const scrollToBottom = () => {
-    bottomRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+    bottomRef.current.scrollIntoView({
+      behavior: "smooth",
+      block: "nearest",
+    });
   };
 
   useEffect(() => {
-    // scrollToBottom();
+    scrollToBottom();
   }, [timerHistoryLog]);
 
   return (

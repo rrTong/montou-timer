@@ -70,7 +70,6 @@ const Timer = ({ timerStart, timerEnd }) => {
           .hours()}h  ${copyTimeDiff.minutes()}m ${copyTimeDiff.seconds()}s`,
       },
     ]);
-    console.log(timerHistoryLog);
     const promise = new Promise((resolve, reject) => {
       resolve(setGifState(idle));
     });

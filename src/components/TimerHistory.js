@@ -17,7 +17,7 @@ const TimerHistory = ({ timerHistoryLog }) => {
   return (
     <div id="timer-history">
       {timerHistoryLog.reverse().map((skip) => (
-        <div id="timer-history-log" key={skip.amount}>
+        <div id="timer-history-log" key={skip.oldTimer}>
           {skip.time}, {skip.type}, {skip.amount} {skip.unit}, {skip.oldTimer}
           {" => "}
           {skip.newTimer}

@@ -1,9 +1,13 @@
 import crypto from "crypto";
 import express from "express";
 import dotenv from "dotenv";
+import { fileURLToPath } from "url";
+import path, { dirname } from "path";
 dotenv.config();
 const app = express();
-const port = 8080;
+const port = process.env.PORT || 8080;
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 // Notification request headers
 const TWITCH_MESSAGE_ID = "Twitch-Eventsub-Message-Id".toLowerCase();
@@ -21,7 +25,8 @@ const MESSAGE_TYPE_REVOCATION = "revocation";
 // Prepend this string to the HMAC that you create from the message
 const HMAC_PREFIX = "sha256=";
 
-app.use(express.json());
+const buildPath = path.join(__dirname, "..", "build");
+app.use(express.static(buildPath));
 
 app.post("/eventsub", (req, res) => {
   let secret = getSecret();
@@ -54,7 +59,7 @@ app.post("/eventsub", (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log(`Montou Timer Backend listening on port ${port}!`);
+  console.log(`Montou Timer Server listening on port ${port}!`);
 });
 
 const getSecret = () => {

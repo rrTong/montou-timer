@@ -5,9 +5,9 @@ import "./App.scss";
 
 function App() {
   const [timerStart, setTimerStart] = useState(moment());
-  const [timerEnd, setTimerEnd] = useState(moment().add(2, "hours"));
-  const [timerInput, setTimerInput] = useState("02:00:00");
-  const [timerInputH, setTimerInputH] = useState(2);
+  const [timerEnd, setTimerEnd] = useState(moment().add(3, "hours"));
+  const [timerInput, setTimerInput] = useState("03:00:00");
+  const [timerInputH, setTimerInputH] = useState(3);
   const [timerInputM, setTimerInputM] = useState(0);
   const [timerInputS, setTimerInputS] = useState(0);
 
@@ -48,7 +48,7 @@ function App() {
         <input
           className="input"
           type="text"
-          placeholder="02:00:00"
+          placeholder="03:00:00"
           value={timerInput}
           onChange={(e) => handleTimerInput(e)}
         />
@@ -65,7 +65,7 @@ function App() {
           value="Clear"
           onClick={() => {
             setTimerInput("");
-            setTimerInputH(2);
+            setTimerInputH(3);
             setTimerInputM(0);
             setTimerInputS(0);
           }}

@@ -2,7 +2,7 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-Live on heroku: [Link](https://montou-timer.herokuapp.com/)
+Live on heroku: [Link](https://montou-timer.vercel.app/)
 
 ## References
 
